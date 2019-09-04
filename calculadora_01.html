@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculadora</title>
+    <script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#btn_estilo').click(function(){
+                $('link').attr('href', 'assets/css/mac.css')
+                console.log('viadui')
+            })
+        })
+    </script>
+    <link href="assets/css/windows.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+        
+        <div id="container">
+            <div id="visor"></div>
+            <div id="config" class="fun" onclick="abrir_conf()">@</div>
+            <div id="div_vazia"></div>
+            <div id="limpar" class="fun" onclick="limpar()">C</div>
+            <div id="zero" class="num" onclick="clicar('0')">0</div>
+            <div id="um" class="num" onclick="clicar('1')">1</div>
+            <div id="dois" class="num" onclick="clicar('2')">2</div>
+            <div id="tres" class="num" onclick="clicar('3')">3</div>
+            <div id="quatro" class="num" onclick="clicar('4')">4</div>
+            <div id="cinco" class="num" onclick="clicar('5')">5</div>
+            <div id="seis" class="num" onclick="clicar('6')">6</div>
+            <div id="sete" class="num" onclick="clicar('7')">7</div>
+            <div id="oito" class="num" onclick="clicar('8')">8</div>
+            <div id="nove" class="num" onclick="clicar('9')">9</div>
+            <div id="soma" class="sinal" onclick="clicar('+')">+</div>
+            <div id="subi" class="sinal" onclick="clicar('-')">-</div>
+            <div id="divi" class="sinal" onclick="clicar('/')">/</div>
+            <div id="mult" class="sinal" onclick="clicar('x')">x</div>
+            <div id="resultado" class="sinal" onclick="clicar('=')">=</div>
+            <div id="ponto" class="sinal" onclick="clicar('.')">.</div>
+            <div id="tela_config" style="display: none";>
+                <div id="voltar" onclick="abrir_conf()">X</div>
+                <div>Mudar estilo
+                    <button id="btn_estilo">clique aqui</button>
+                </div>
+            </div>
+        </div>
+
+    <script>
+            var i = 0
+            var op = 0
+            var num = 0
+            var visor_num = document.getElementById('visor') //a div visor é renacionada com a variável
+            var numero = []
+            var operador = []
+            var resultado
+            function clicar(botao){ // função clicar que recebe na var boap o evendo de onclick das div
+                var simbolo = botao // var simbolo recebe botao
+                //var formula = visor_num.innerText.split("+")
+
+                switch (simbolo){
+                    case "+":
+                        //console.log("soma")                       
+                        operator = simbolo
+                        guardar_operador(operator)
+                        
+                    break;
+                    case "-":
+                        //console.log("subtração")
+                        operator = simbolo
+                        guardar_operador(operator)
+                    break;
+                    case "/":
+                        //console.log("divisão")
+                        operator = simbolo
+                        guardar_operador(operator)
+                    break;
+                    case "x":
+                        //console.log("multiplicação")
+                        operator = simbolo
+                        guardar_operador(operator)
+                    break;
+                    case "=":
+                        if (operador == '+'){
+                            resultado = numero[0] + numero[1]                        
+                        }
+                        if (operador == '-'){
+                            resultado = numero[0] - numero[1]                        
+                        }
+                        if (operador == '/'){
+                            resultado = numero[0] / numero[1]                        
+                        }
+                        if (operador == 'x'){
+                            resultado = numero[0] * numero[1]                        
+                        }
+
+                        visor_num.innerText = resultado
+                        numero[0] = resultado
+                        op = 0
+                        i = 0
+                        
+                    break;
+                    default:
+                        num += simbolo
+                        guardar_num(num)
+                        visor_num.innerText += botao; // o número ou simbolo é escrito na na div visor (tela)
+                    
+                    break;
+                }
+                function guardar_num(num){
+                    if(i<5){
+                        numero[i] = Number(num)
+                        console.log(numero)
+                    }
+                }
+                function guardar_operador(opeator){
+                    if(op<5){
+                        operador[op] = opeator
+                        console.log(operador)
+                    }
+                    visor_num.innerText += botao; // o número ou simbolo é escrito na na div visor (tela)
+                    i++
+                    op++
+                    num = 0
+                }               
+            }
+            function limpar(){
+                    console.log('limpou')
+                    i = 0
+                    op = 0
+                    num = 0
+                    visor_num.innerText = ""
+                    numero = []
+                    operador = []
+                    resultado = null
+                }
+            function abrir_conf(){
+                const tela_conf = document.getElementById('tela_config')
+                if(tela_conf.style.display == 'none'){
+                    tela_conf.style.display = 'initial'
+                }
+                else{
+                    tela_conf.style.display = 'none'
+                }
+            }
+        </script>
+   
+</body>
+</html>
